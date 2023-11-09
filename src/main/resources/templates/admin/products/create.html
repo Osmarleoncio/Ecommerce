@@ -1,0 +1,104 @@
+        <!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:insert = "~{admin/template_admin::head_admin}">
+    <body>
+        <div th:insert = "~{admin/template_admin::header_admin}"></div>
+
+        <div class="container">
+            <h2>Crear Producto</h2>
+            <form class="form-horizontal" th:action="@{/admin/products/save-product}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="name">Nombre:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" name="name"
+                               placeholder="Ingrese el nombre del producto" autocomplete="off" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="description">Descripción:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="description" name="description"
+                                  placeholder="Ingrese la descripcion del producto" required
+                                  autocomplete="off"> </textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="price">Precio:</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" step="any" id="price" name="price"
+                               placeholder="Ingrese el precio del producto" autocomplete="off" required>
+                    </div>
+                </div>
+
+               <div class="form-group">
+                      <label for="img" style="font-weight: bold;">Imagen del Producto:</label>
+                      <label for="img" class="custom-file-upload">Seleccionar Imagen</label>
+                      <input type="file" id="img" name="img" onchange="mostrarVistaPrevia()" style="display: none;">
+                </div>
+                
+                <div class="form-group">
+                    <img id="vistaPrevia" style="max-width: 50%;" />
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-2">
+                         <button type="submit" class="btn btn-dark" onclick="showSuccessAlert()">
+                            <span class="glyphicon glyphicon-saved"></span> Guardar
+                        </button>
+                    </div>
+                </div>
+
+            </form>  
+
+        </div>
+    </body>
+
+    <div class="footer" th:insert = "~{admin/template_admin::footer_admin}"></div>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script th:inline="javascript">     
+            function showSuccessAlert() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Producto creado con éxito!',
+                    showConfirmButton: false,
+                    timer: 1500, // Mostrar la alerta durante 3 segundos
+                });
+            }
+        </script>
+        
+           <script>
+    function mostrarVistaPrevia() {
+        var input = document.getElementById('img');
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('vistaPrevia').src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+
+</script> 
+
+        
+    <style>
+        .body{
+            position: relative;
+        }
+        .footer{
+            position: absolute;
+            bottom:0px;
+            height: 60px;
+            width: 100%;
+        }
+    </style>
+</html>
